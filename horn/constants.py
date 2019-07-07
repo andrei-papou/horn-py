@@ -1,6 +1,7 @@
 from enum import Enum
+from typing import Optional
 
 
-class LayerTypes(Enum):
+class LayerType(Enum):
     DENSE = 'Dense'
     ACTIVATION = 'Activation'
