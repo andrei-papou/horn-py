@@ -40,10 +40,10 @@ class ModelSaver:
             {
                 'name': layer.name,
                 'type': LayerType.DENSE.value,
-                'weights_shape': weights[0].shape,
-                'weights_id': self._save_weight(weights[0]),
-                'bias_shape': weights[1].shape if layer.use_bias else None,
-                'bias_id': self._save_weight(weights[1]) if layer.use_bias else None,
+                'w_shape': weights[0].shape,
+                'w_id': self._save_weight(weights[0]),
+                'b_shape': weights[1].shape if layer.use_bias else None,
+                'b_id': self._save_weight(weights[1]) if layer.use_bias else None,
             }
         ]
         if layer.activation is not None and layer.activation is not activations.linear:
