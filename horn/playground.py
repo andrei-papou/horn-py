@@ -2,9 +2,18 @@ from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 
+from keras.activations import softmax
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.layers.advanced_activations import Softmax
 from keras.optimizers import Adam
+
+
+def custom_axis_softmax(axis):
+    def soft(arg):
+        return softmax(arg, axis=axis)
+    return soft
+
 
 iris_data = load_iris()  # load the iris dataset
 
@@ -29,7 +38,8 @@ model = Sequential()
 
 model.add(Dense(10, input_shape=(4,), activation='relu', name='fc1'))
 model.add(Dense(10, activation='relu', name='fc2'))
-model.add(Dense(3, activation='softmax', name='output'))
+model.add(Dense(3, activation='linear', name='fc4'))
+model.add(Softmax(name='output', axis=1))
 
 # Adam optimizer with learning rate of 0.001
 optimizer = Adam(lr=0.001)
@@ -48,4 +58,9 @@ results = model.evaluate(test_x, test_y)
 print('Final test set loss: {:4f}'.format(results[0]))
 print('Final test set accuracy: {:4f}'.format(results[1]))
 
-model.save('model.h5')
+print('X for testing:')
+print(test_x[:3, :])
+print('Y for testing:')
+print(test_y[:3, :])
+
+model.save('../artifacts/model.h5')
